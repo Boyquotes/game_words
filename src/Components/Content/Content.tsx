@@ -157,7 +157,7 @@ console.log(word.split(''))
             {!possibleMatches.length && isMatching && (
               <p className="not-found">Not found</p>
             )}
-            <h2>Words that contains</h2>
+            <h2>Words that contains {wordsHasLetters.length}</h2>
             <div className="main__mt__mw__contain-words">
               {wordsHasLetters &&
                 wordsHasLetters.map((word) => {

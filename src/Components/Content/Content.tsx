@@ -27,28 +27,60 @@ const Content = () => {
       setPossibleMatches([]);
       setIsMatching(true);
 
-      fetch("/words.txt")
+//      fetch("/words.txt")
+      fetch("/words_altissia.txt")
         .then((response) => response.text())
         .then((data) => {
+            let resultWords: string[] = [];
           const wordsArray = data.split(/\r?\n/); // Split into array of words
-
+console.log(wordsArray)
           const scrambledLetters = [...searchContent.searchValue]; // Copy and parse string of letters into array
+console.log(scrambledLetters.length)
 
           /* This codeblock gets all the words that cantains the letters */
           const matchedWords = wordsArray.filter((word) => {
             let counter = 0;
-
-            scrambledLetters.forEach((letter) => {
-              if (word.includes(letter)) {
+console.log(word);
+console.log(word.length);
+console.log(word.split(''))
+            const wordLetters = word.split('');
+            console.log(wordLetters);
+            wordLetters.forEach((letter) => {
+                console.log(letter);
+                console.log(searchContent.searchValue);
+              if (searchContent.searchValue.includes(letter)) {
+                  console.log('ok')
+                  console.log(letter)
                 counter++;
+                console.log(counter)
               }
             });
 
-            if (counter === scrambledLetters.length) {
-              return word;
-            }
+            if (counter === word.length) {
+              console.log('mot '+word)
+              resultWords.push(word);
+              console.log(resultWords);
+            } 
+
+            // scrambledLetters.forEach((letter) => {
+            //     console.log(letter);
+            //   if (word.includes(letter)) {
+            //     counter++;
+            //   }
+            // });
+
+            // if (counter === scrambledLetters.length && word.length === scrambledLetters.length) {
+            //   return word;
+            // }
           });
-          setWordsHasLetters(matchedWords);
+          console.log("matchedWords "+matchedWords)
+            // sort ascending - shorter items first
+            console.log(resultWords.sort((a, b) => a.length - b.length));
+
+            // sort descending - longer items first
+            console.log(resultWords.sort((a, b) => b.length - a.length));
+          setWordsHasLetters(resultWords);
+          console.log("matchedWords "+wordsHasLetters)
           /* End of codeblock */
 
           /* This codeblock gets the exact word(s) that can be built with the letters */
